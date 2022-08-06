@@ -18,7 +18,7 @@ jobs:
       CONTAINER_REGISTRY: ghcr.io
       GITHUB_ORGANIZATION: levivannoort #topicuskeyhub
       APPLICATION_NAME: keyhub-vault-operator
-      APPLICATION_VERSION: ${{ github.event.inputs.logLevel }}
+      APPLICATION_VERSION: ${{ github.event.inputs.application_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
