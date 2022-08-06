@@ -8,11 +8,13 @@
   <img src="https://img.shields.io/github/license/topicuskeyhub/keyhub-vault-operator" alt="license">
 </p>
 
-# Topicus KeyHub Vault Operator
+# Topicus - KeyHub Vault Operator
 
 The KeyHub Vault Operator can be used in conjuction with a Topicus KeyHub instance, to be able to synchronize records in a KeyHub vault to Kubernetes secrets. It does so through a policy based mechanism, which are stored in a KeyHub vault. To define a mapping between KeyHub and Kubernetes a `KeyHubSecret` custom resource can be created. The name of the generated Kubernetes Secret is the same as the name of the KeyHubSecret. The mapping between a secret key and a vault record is based on the uuid of the vault record. Secrets will be automatically synchronized with a 10 minute interval. In case of an error the retry interval is 2 minutes.
 
-The documentation can be found [here](https://topicuskeyhub.github.io/keyhub-vault-operator/). Additional information about development and releasing can be found under the 'docs'-directory.
+> Documentation: https://topicuskeyhub.github.io/keyhub-vault-operator/
+>
+> Product site: https://www.topicus-keyhub.com/
 
 ## Installation
 
