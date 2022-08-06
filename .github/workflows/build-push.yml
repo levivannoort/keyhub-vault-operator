@@ -1,6 +1,14 @@
 name: build-push
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      application_version:
+        description: 'The application version to build'
+        required: true
+        default: '0.1.0'
+# switch to a release based trigger which makes sure the release and image are the same (APPLICATION_VERSION: ${{ env.GITHUB_REF }})
+  # release:
+  #   types: [published]
 
 jobs:
   build-push:
@@ -10,7 +18,7 @@ jobs:
       CONTAINER_REGISTRY: ghcr.io
       GITHUB_ORGANIZATION: levivannoort #topicuskeyhub
       APPLICATION_NAME: keyhub-vault-operator
-      APPLICATION_VERSION: 0.0.1
+      APPLICATION_VERSION: ${{ github.event.inputs.logLevel }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
