@@ -28,6 +28,7 @@ make test
 ### Git pre-commit hook to check Conventional Commits
 - Install [`pre-commit`](https://pre-commit.com/#install)
 - Install `pre-commit` script ([more info](https://github.com/compilerla/conventional-pre-commit)):
+
   ```console
   pre-commit install --hook-type commit-msg
   ```
@@ -40,7 +41,7 @@ kind: Kustomization
 namespace: keyhub-vault-operator
 
 resources:
-- ssh://github.com/topicusonderwijs/keyhub-vault-operator//config/default?ref=main
+- ssh://github.com/topicuskeyhub/keyhub-vault-operator//config/default?ref=main
 ```
 
 ## Release
