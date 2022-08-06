@@ -1,0 +1,35 @@
+name: build-push
+on:
+  workflow_dispatch: {}
+
+jobs:
+  build-push:
+    name: build-push
+    runs-on: ubuntu-latest
+    env:
+      CONTAINER_REGISTRY: ghcr.io
+      GITHUB_ORGANIZATION: levivannoort #topicuskeyhub
+      APPLICATION_NAME: keyhub-vault-operator
+      APPLICATION_VERSION: 0.0.1
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: setup-buildx
+        uses: docker/setup-buildx-action@v2
+
+      # docker build, with two tags (explicit version and latest)
+      - name: build-container-image
+        run: docker build -t ${{ env.CONTAINER_REGISTRY }}/${{ env.GITHUB_ORGANIZATION }}/${{ env.APPLICATION_NAME }}:${{ env.APPLICATION_VERSION }} -t ${{ env.CONTAINER_REGISTRY }}/${{ env.GITHUB_ORGANIZATION }}/${{ env.APPLICATION_NAME }}:latest .
+
+      - name: login-to-ghcr
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.CONTAINER_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # docker push --all-tags, pushes all the tags (explicit version and latest)
+      - name: push-container-image
+        run: docker push --all-tags ${{ env.CONTAINER_REGISTRY }}/${{ env.GITHUB_ORGANIZATION }}/${{ env.APPLICATION_NAME }}
+
