@@ -27,7 +27,7 @@ all: manager
 
 # Run tests
 ENVTEST_ASSETS_DIR=$(shell pwd)/testbin
-PACKAGES=$(shell go list github.com/topicusonderwijs/keyhub-vault-operator/api github.com/topicusonderwijs/keyhub-vault-operator/controllers/... | grep controllers | grep -v test | tr "\n" ",")
+PACKAGES=$(shell go list github.com/topicuskeyhub/keyhub-vault-operator/api github.com/topicuskeyhub/keyhub-vault-operator/controllers/... | grep controllers | grep -v test | tr "\n" ",")
 test: generate fmt vet manifests
 	mkdir -p ${ENVTEST_ASSETS_DIR}
 	test -f ${ENVTEST_ASSETS_DIR}/setup-envtest.sh || curl -sSLo ${ENVTEST_ASSETS_DIR}/setup-envtest.sh https://raw.githubusercontent.com/kubernetes-sigs/controller-runtime/v0.7.0/hack/setup-envtest.sh
