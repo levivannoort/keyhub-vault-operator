@@ -10,16 +10,16 @@
 
 # Topicus KeyHub Vault Operator
 
-The KeyHub Vault Operator can be used in conjuction with a Topicus KeyHub instance, to be able to synchronize records in a KeyHub vault to Kubernetes secrets with the use of the `KeyhubSecret` custom resource. It does so through a policy base mechanism 
+The KeyHub Vault Operator can be used in conjuction with a Topicus KeyHub instance, to be able to synchronize records in a KeyHub vault to Kubernetes secrets. It does so through a policy based mechanism, which are stored in a KeyHub vault. To define a mapping between KeyHub and Kubernetes a `KeyHubSecret` custom resource can be created. The name of the generated Kubernetes Secret is the same as the name of the KeyHubSecret. The mapping between a secret key and a vault record is based on the uuid of the vault record. Secrets will be automatically synchronized with a 10 minute interval. In case of an error the retry interval is 2 minutes.
 
-The documentation can be found [here](https://topicuskeyhub.github.io/keyhub-vault-operator/). Additional information about development/contribution and releasing can be found under the 'docs'-directory.
+The documentation can be found [here](https://topicuskeyhub.github.io/keyhub-vault-operator/). Additional information about development and releasing can be found under the 'docs'-directory.
 
 ## Installation
 
 Although the KeyHub Vault Operator can be installed within the Kubernetes cluster without the pre-requisites, it wont function if the following things aren't present:
 - Accessible KeyHub instance.
-- Configuration of KeyHub components (e.g. vaults, OIDC applications, policy record, records).
-- Kubernetes secret with the client credentials (i.e. `keyhub-vault-controller-secret`).
+- Configuration of KeyHub components (e.g. vaults, OIDC applications, policy, records).
+- Kubernetes secret with the client credentials (i.e. `keyhub-vault-controller-secret`), used to access the policy vault.
 
 The following kustomize file can be applied to the Kubernetes cluster for the installation of the controller.
 ```
