@@ -23,7 +23,7 @@ To define a mapping between KeyHub and Kubernetes a `KeyHubSecret` custom resour
 Although the KeyHub Vault Operator can be installed within the Kubernetes cluster without the pre-requisites, it wont function if the following things aren't present:
 - Accessible KeyHub instance.
 - Configuration of KeyHub components (e.g. vaults, OIDC applications, policy, records).
-- Kubernetes secret with the client credentials (i.e. `keyhub-vault-controller-secret`), used to access the policy vault.
+- Kubernetes secret with the client credentials (i.e. `keyhub-vault-operator-secret`), used to access the policy vault.
 
 The following kustomize file can be applied to the Kubernetes cluster for the installation of the controller.
 ```
