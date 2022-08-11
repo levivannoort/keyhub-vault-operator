@@ -19,7 +19,6 @@ jobs:
       CONTAINER_REGISTRY: ghcr.io
       GITHUB_ORGANIZATION: levivannoort #topicuskeyhub
       APPLICATION_NAME: keyhub-vault-operator
-      APPLICATION_VERSION: ${{ github.GITHUB_REF }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,7 +28,7 @@ jobs:
 
       # docker build, with two tags (explicit version and latest)
       - name: build-container-image
-        run: docker build -t ${{ env.CONTAINER_REGISTRY }}/${{ env.GITHUB_ORGANIZATION }}/${{ env.APPLICATION_NAME }}:${{ env.APPLICATION_VERSION }} -t ${{ env.CONTAINER_REGISTRY }}/${{ env.GITHUB_ORGANIZATION }}/${{ env.APPLICATION_NAME }}:latest .
+        run: docker build -t ${{ env.CONTAINER_REGISTRY }}/${{ env.GITHUB_ORGANIZATION }}/${{ env.APPLICATION_NAME }}:${{ github.GITHUB_REF }} -t ${{ env.CONTAINER_REGISTRY }}/${{ env.GITHUB_ORGANIZATION }}/${{ env.APPLICATION_NAME }}:latest .
 
       - name: login-to-ghcr
         uses: docker/login-action@v1
