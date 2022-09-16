@@ -4,8 +4,8 @@ on:
     types: [published]
 
 jobs:
-  build-push:
-    name: build-push
+  build-publish:
+    name: build-publish
     runs-on: ubuntu-latest
     env:
       CONTAINER_REGISTRY: ghcr.io
