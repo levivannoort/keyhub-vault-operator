@@ -1,7 +1,9 @@
-name: build-push
+name: build-publish
 on:
-  release:
-    types: [published]
+  workflow_run:
+    workflows: ["release"]
+    types:
+      - completed
 
 jobs:
   build-publish:
