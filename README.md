@@ -37,12 +37,25 @@ resources:
 ```
 
 ## Release
-Manually run the `release` workflow (branch `main`) from Github Actions.
+Manually run the `release` workflow (branch `main`) from Github Actions. This will create a release which in turn is the trigger for the `build-and-publish` workflow.
 
 The `release` workflow will do the following:
 - Update `images['controller'].newTag` in `config/manager/kustomization.yaml` with the full semver (prefixed with a 'v'), e.g. `v0.1.0`. The semver is based on conventional commits and the latest git tag.
 - Create and push the release tag, e.g. `v0.1.0`.
 - Create a GitHub release with a changelog based on the (conventional) commits since the last release.
 
-The `build-and-publish` workflow will trigger based on a publishing a release.
+The `build-and-publish` workflow will do the following.
 - Build and publish the image from the release tag.
+
+## Development
+
+- Installation of a local kubernetes cluster, e.g. [minikube](https://minikube.sigs.k8s.io/docs/)
+- Install [Operator SDK](https://sdk.operatorframework.io/)
+
+### Pre-commit hook to check conventional commits
+- Install [`pre-commit`](https://pre-commit.com/#install)
+- Install [`pre-commit-script`](https://github.com/compilerla/conventional-pre-commit):
+
+```console
+pre-commit install --hook-type commit-msg
+```
