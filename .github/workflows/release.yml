@@ -1,19 +1,21 @@
-name: Release
+name: release
 on:
   workflow_dispatch: {}
 
 jobs:
   release:
-    name: Release
+    name: release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
       - name: Setup Tools
-        uses: yokawasa/action-setup-kube-tools@v0.8.0
+        uses: yokawasa/action-setup-kube-tools@v0.8.2
         with:
           setup-tools: |
             yq
+
       - name: Create Tag and Changelog
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
@@ -25,6 +27,7 @@ jobs:
           pre-commit: ".github/release.js"
           skip-version-file: "true"
           release-count: "0"
+
       - name: Create Release
         uses: actions/create-release@v1
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
@@ -34,17 +37,18 @@ jobs:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
+
       - name: Prepare next iteration
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         run: |
           yq eval -i '.images[0].newTag = "latest" ' ./config/manager/kustomization.yaml
+
       - name: push
         uses: github-actions-x/commit@v2.8
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.github_token }}
           commit-message: "chore(release): prepare for next development iteration"
           files: config/manager/kustomization.yaml
           name: ${{ github.repository_owner }}
           email: "${{ github.repository_owner }}@users.noreply.github.com" 
-      

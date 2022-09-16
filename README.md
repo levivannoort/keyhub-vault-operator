@@ -20,7 +20,7 @@ To define a mapping between KeyHub and Kubernetes a `KeyHubSecret` custom resour
 
 ## Installation
 
-Although the KeyHub Vault Operator can be installed within the Kubernetes cluster without the pre-requisites, it wont function if the following things aren't present:
+Although the KeyHub Vault Operator can be installed within the kubernetes cluster without the pre-requisites, it wont function if the following things aren't present:
 - Accessible KeyHub instance.
 - Configuration of KeyHub components (e.g. vaults, OIDC applications, policy, records).
 - Kubernetes secret with the client credentials (i.e. `keyhub-vault-operator-secret`), used to access the policy vault.
@@ -35,3 +35,14 @@ namespace: keyhub-vault-operator
 resources:
 - ssh://github.com/topicuskeyhub/keyhub-vault-operator//config/default?ref=main
 ```
+
+## Release
+Manually run the `release` workflow (branch `main`) from Github Actions.
+
+The `release` workflow will do the following:
+- Update `images['controller'].newTag` in `config/manager/kustomization.yaml` with the full semver (prefixed with a 'v'), e.g. `v0.1.0`. The semver is based on conventional commits and the latest git tag.
+- Create and push the release tag, e.g. `v0.1.0`.
+- Create a GitHub release with a changelog based on the (conventional) commits since the last release.
+
+The `build-and-publish` workflow will trigger based on a publishing a release.
+- Build and publish the image from the release tag.
