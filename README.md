@@ -35,6 +35,10 @@ namespace: keyhub-vault-operator
 resources:
 - ssh://github.com/topicuskeyhub/keyhub-vault-operator//config/default?ref=main
 ```
+## Configuration
+
+- []()
+- []()
 
 ## Release
 Manually run the `release` workflow (branch `main`) from Github Actions. This will create a release which in turn is the trigger for the `build-and-publish` workflow.
@@ -47,15 +51,27 @@ The `release` workflow will do the following:
 The `build-and-publish` workflow will do the following.
 - Build and publish the image from the release tag.
 
-## Development
+## Development - requirements
 
 - Installation of a local kubernetes cluster, e.g. [minikube](https://minikube.sigs.k8s.io/docs/)
 - Install [Operator SDK](https://sdk.operatorframework.io/)
 
 ### Pre-commit hook to check conventional commits
 - Install [`pre-commit`](https://pre-commit.com/#install)
-- Install [`pre-commit-script`](https://github.com/compilerla/conventional-pre-commit):
+- Configure [`pre-commit-script`](https://github.com/compilerla/conventional-pre-commit)
 
 ```console
 pre-commit install --hook-type commit-msg
+```
+
+## Development - getting started
+
+Run the operator locally. Make sure you are connecting to your local Kubernetes cluster!
+```
+make run
+```
+
+Run the tests
+```
+make test
 ```
