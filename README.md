@@ -37,8 +37,8 @@ resources:
 ```
 ## Configuration
 
-- []()
-- []()
+- [user-guide](docs/user-guide.md)
+- [operator-manual](docs/operator-manual.md)
 
 ## Release
 Manually run the `release` workflow (branch `main`) from Github Actions. This will create a release which in turn is the trigger for the `build-and-publish` workflow.
