@@ -28,7 +28,7 @@ jobs:
       - name: determine build tag
         id: build-tag
         run: |
-          echo "::set-output name=tag::$(yq eval .images[0].newTag config/manager/kustomization.yaml)\n"
+          echo "::set-output name=tag::$(yq eval .images[0].newTag config/manager/kustomization.yaml)"
 
       - name: setup-buildx
         uses: docker/setup-buildx-action@v2
