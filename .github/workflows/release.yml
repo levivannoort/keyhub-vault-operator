@@ -63,6 +63,6 @@ jobs:
               workflow_id: 'test.yml',
               ref: 'main',
               inputs: {
-                tag: '${{ steps.changelog.outputs.tag }}','
+                tag: '${{ steps.changelog.outputs.tag }}',
               },
             })
