@@ -1,4 +1,4 @@
-name: build-publish
+name: image
 on:
   workflow_dispatch:
     inputs:
@@ -8,40 +8,38 @@ on:
         required: true
 
 jobs:
-  build-publish:
-    name: build-publish
+  image:
+    name: image
     runs-on: ubuntu-latest
-    env:
-      GITHUB_ORGANIZATION: levivannoort #topicuskeyhub
     steps:
-      - name: checkout
+      - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.inputs.tag }}
 
-      - name: setup yq
+      - name: Setup yq
         uses: yokawasa/action-setup-kube-tools@v0.8.2
         with:
           setup-tools: |
             yq
 
-      - name: determine build tag
+      - name: Determine build tag
         id: build-tag
         run: |
           echo "::set-output name=tag::$(yq eval .images[0].newTag config/manager/kustomization.yaml)"
 
-      - name: setup-buildx
+      - name: Setup buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: build-container-image
-        run: docker build -t ghcr.io/${{ env.GITHUB_ORGANIZATION }}/keyhub-vault-operator:${{ steps.build-tag.outputs.tag }} .
+      - name: Build container image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/keyhub-vault-operator:${{ steps.build-tag.outputs.tag }} .
 
-      - name: login-to-ghcr
+      - name: Login to ghcr
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: push-container-image
-        run: docker push --all-tags ghcr.io/${{ env.GITHUB_ORGANIZATION }}/keyhub-vault-operator
+      - name: Push container image
+        run: docker push --all-tags ghcr.io/${{ github.repository_owner }}/keyhub-vault-operator

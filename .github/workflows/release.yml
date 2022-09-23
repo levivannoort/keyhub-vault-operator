@@ -53,14 +53,14 @@ jobs:
           name: ${{ github.repository_owner }}
           email: "${{ github.repository_owner }}@users.noreply.github.com" 
 
-      - name: Trigger build-publish workflow
+      - name: Trigger image workflow
         uses: actions/github-script@v6
         with:
           script: |
             github.rest.actions.createWorkflowDispatch({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'build-publish.yml',
+              workflow_id: 'image.yml',
               ref: 'main',
               inputs: {
                 tag: '${{ steps.changelog.outputs.tag }}',
