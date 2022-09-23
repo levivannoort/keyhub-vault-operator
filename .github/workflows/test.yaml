@@ -7,6 +7,9 @@ on:
     branches:
       - 'master'
 
+env:
+  GO_VERSION: 1.16
+
 jobs:
   test:
     name: test
@@ -15,6 +18,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # to-do: test
+      - name: Setup Golang
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ env.GO_VERSION }}
 
-      # to-do: report test coverage
+      - name: Setup kubebuilder
+        run: |
+          curl -sS -L -o kubebuilder.tar.gz https://github.com/kubernetes-sigs/kubebuilder/releases/download/v2.3.1/kubebuilder_2.3.1_linux_amd64.tar.gz && \
+          tar xvf kubebuilder.tar.gz && \
+          mv kubebuilder_2.3.1_linux_amd64 /usr/local/kubebuilder && \
+          chmod +x /usr/local/kubebuilder/bin/*
+
+      - name: Run tests
+        run: |
+          make test
