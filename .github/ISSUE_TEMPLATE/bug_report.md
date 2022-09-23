@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: ''
+labels: 'type: bug'
 assignees: ''
 
 ---
@@ -21,4 +21,6 @@ If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
- - Version [e.g. 0.1.2]
+
+**Environment**
+ - version:
