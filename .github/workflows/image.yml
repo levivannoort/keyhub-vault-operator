@@ -4,7 +4,7 @@ on:
     inputs:
       tag:
         type: string
-        description: tag to be used by the container (inherited from 'release' workflow trigger)
+        description: tag to be used (inherited from 'release' workflow trigger), e.g. v0.1.2
         required: true
 
 jobs:
