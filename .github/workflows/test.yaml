@@ -9,6 +9,7 @@ on:
 
 env:
   GO_VERSION: 1.16
+  KUBEBUILDER_VERSION: 2.3.1
 
 jobs:
   test:
@@ -25,10 +26,10 @@ jobs:
 
       - name: Setup kubebuilder
         run: |
-          curl -sS -L -o kubebuilder.tar.gz https://github.com/kubernetes-sigs/kubebuilder/releases/download/v2.3.1/kubebuilder_2.3.1_linux_amd64.tar.gz && \
+          curl -sS -L -o kubebuilder.tar.gz https://github.com/kubernetes-sigs/kubebuilder/releases/download/v${{ env.KUBEBUILDER_VERSION }}/kubebuilder_${{ env.KUBEBUILDER_VERSION }}_linux_amd64.tar.gz && \
           tar xvf kubebuilder.tar.gz && \
-          mv kubebuilder_2.3.1_linux_amd64 /usr/local/kubebuilder && \
-          chmod +x /usr/local/kubebuilder/bin/*
+          mv kubebuilder_${{ env.KUBEBUILDER_VERSION }}_linux_amd64 ~/.local/kubebuilder && \
+          chmod +x ~/.local/kubebuilder/bin/*
 
       - name: Run tests
         run: |
