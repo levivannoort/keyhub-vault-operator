@@ -37,28 +37,27 @@ resources:
 ```
 ## Configuration
 
-- [user-guide](docs/user-guide.md)
-- [operator-manual](docs/operator-manual.md)
+- [user-guide](docs/user-guide.md) - describes using the operator from an application/user perspective.
+- [operator-manual](docs/operator-manual.md) - describes using operator from a keyhub/operator perspective.
 
 ## Release
 Manually run the `release` workflow (branch `main`) from Github Actions. This will create a release which in turn is the trigger for the `build-and-publish` workflow.
 
 The `release` workflow will do the following:
-- Update `images['controller'].newTag` in `config/manager/kustomization.yaml` with the full semver (prefixed with a 'v'), e.g. `v0.1.0`. The semver is based on conventional commits and the latest git tag.
-- Create and push the release tag, e.g. `v0.1.0`.
-- Create a GitHub release with a changelog based on the (conventional) commits since the last release.
+
+```
+Updates the 'images['controller'].newTag' in 'config/manager/kustomization.yaml' with the full semver (prefixed with a 'v'), e.g. 'v0.1.0'. The semver is based on conventional commits and the latest git tag. Create and push the release tag, e.g. 'v0.1.0'. Create a GitHub release with a changelog based on the (conventional) commits since the last release.
+```
 
 The `build-and-publish` workflow will do the following.
-- Build and publish the image from the release tag.
+
+```
+Build and publish the image from the release tag.
+```
 
 ## Development - requirements
 
-- Installation of a local kubernetes cluster, e.g. [minikube](https://minikube.sigs.k8s.io/docs/)
-- Install [Operator SDK](https://sdk.operatorframework.io/)
-
-### Pre-commit hook to check conventional commits
-- Install [`pre-commit`](https://pre-commit.com/#install)
-- Configure [`pre-commit-script`](https://github.com/compilerla/conventional-pre-commit)
+You’ll need a Kubernetes cluster to run against. You can use [kind](https://github.com/kubernetes-sigs/kind) or [minikube](https://minikube.sigs.k8s.io/docs/) to get a local cluster for testing, or run against a remote cluster. This project uses the [operator sdk](https://sdk.operatorframework.io/), which is a framework that uses the controller-runtime library to make writing operators easier (it provides high level apis, abstractions, scaffolding, code genration and lastly extensions). Additionally the [pre-commit](https://pre-commit.com/#install) can be installed and configured to enforce the standardization of commit message, where the conventional commit standard is used, which can be configured with a [pre-commit-script](https://github.com/compilerla/conventional-pre-commit) in the following way:
 
 ```console
 pre-commit install --hook-type commit-msg
@@ -66,12 +65,28 @@ pre-commit install --hook-type commit-msg
 
 ## Development - getting started
 
-Run the operator locally. Make sure you are connecting to your local Kubernetes cluster!
+Run the operator (note: the controller will automatically use the current context in your kubeconfig file, i.e., whatever cluster kubectl cluster-info shows):
 ```
 make run
 ```
 
-Run the tests
+Run the tests:
 ```
 make test
 ```
+
+## License
+
+Copyright 2022.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
