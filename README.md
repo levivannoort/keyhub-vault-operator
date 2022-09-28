@@ -22,8 +22,8 @@ To define a mapping between KeyHub and Kubernetes a `KeyHubSecret` custom resour
 
 Although the KeyHub Vault Operator can be installed within the kubernetes cluster without the pre-requisites, it wont function if the following things aren't present:
 - Accessible KeyHub instance.
-- Configuration of KeyHub components (e.g. vaults, OIDC applications, policy, records).
-- Kubernetes secret with the client credentials (i.e. `keyhub-vault-operator-secret`), used to access the policy vault.
+- Configuration of the different KeyHub components (e.g. vaults, OAuth2/OIDC applications, policy, records).
+- Kubernetes secret with the client credentials (i.e. `keyhub-vault-operator-secret`) used to access the policy vault.
 
 The following kustomize file can be applied to the Kubernetes cluster for the installation of the controller.
 ```
@@ -41,19 +41,15 @@ resources:
 - [operator-manual](docs/operator-manual.md) - describes using operator from a keyhub/operator perspective.
 
 ## Release
-Manually run the `release` workflow (branch `main`) from Github Actions. This will create a release which in turn is the trigger for the `build-and-publish` workflow.
+Manually run the `release` workflow (from the 'main' branch) from Github Actions. This will create a release, which in turn is the trigger for the `image` workflow.
 
 The `release` workflow will do the following:
 
-```
 Updates the 'images['controller'].newTag' in 'config/manager/kustomization.yaml' with the full semver (prefixed with a 'v'), e.g. 'v0.1.0'. The semver is based on conventional commits and the latest git tag. Create and push the release tag, e.g. 'v0.1.0'. Create a GitHub release with a changelog based on the (conventional) commits since the last release.
-```
 
-The `build-and-publish` workflow will do the following.
+The `image` workflow will do the following.
 
-```
-Build and publish the image from the release tag.
-```
+Build and publish the image from the release tag and publishes the container image to github packages.
 
 ## Development - requirements
 
@@ -65,7 +61,7 @@ pre-commit install --hook-type commit-msg
 
 ## Development - getting started
 
-Run the operator (note: the controller will automatically use the current context in your kubeconfig file, i.e., whatever cluster kubectl cluster-info shows):
+Run the operator (note: the operator will automatically use the current context in your kubeconfig file, i.e., whatever cluster kubectl cluster-info shows):
 ```
 make run
 ```
